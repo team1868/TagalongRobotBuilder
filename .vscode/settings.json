@@ -1,0 +1,63 @@
+{
+  "java.format.settings.url": "eclipse-formatter.xml",
+  "editor.defaultFormatter": "xaver.clang-format",
+  "editor.formatOnSave": true,
+  "[groovy]": {
+    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[java]": {
+    "editor.defaultFormatter": "xaver.clang-format",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "editor.tabSize": 2,
+  "cSpell.words": [
+    "Antiscrub",
+    "apriltag",
+    "Arducam",
+    "auton",
+    "BRINGUP",
+    "BUILDABLE",
+    "canbus",
+    "CANCODER",
+    "Choreo",
+    "compbot",
+    "configurability",
+    "CONFS",
+    "controlboard",
+    "CTRE",
+    "Daqs",
+    "Devs",
+    "feedforward",
+    "Leds",
+    "lvuser",
+    "microspec",
+    "microspecs",
+    "Microsystem",
+    "Odometry",
+    "PIDF",
+    "practicebot",
+    "PREMATCH",
+    "setpoint",
+    "Setpoints",
+    "SOTF",
+    "SPOOKIES",
+    "SUBWOOFER",
+    "swervebase",
+    "tagalonglib",
+    "Teleop",
+    "unfused",
+    "Unprofiled",
+    "velo",
+    "vendordeps",
+    "WPILOG"
+  ]
+}
