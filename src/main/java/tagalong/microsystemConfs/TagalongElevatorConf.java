@@ -47,7 +47,7 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
   import tagalong.units.DistanceUnits;
   import tagalong.units.MassUnits;
   import tagalong.units.VelocityUnits;
-  import tagalong.subsystems.confs.micro.ElevatorConf;
+  import tagalong.subsystems.micro.confs.ElevatorConf;
 """;
     // clang-format on
   }
@@ -141,7 +141,6 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
   public static final DistanceUnits positionalLimitsUnits = DistanceUnits.METER;
   public static final double positionalLimitsMin = 0.0;
   public static final double positionalLimitsMax = 0.0;
-  public static final double maxScopeRot = 1.0;
   public static final DistanceUnits defaultTolerancesUnit = DistanceUnits.METER;
   public static final double defaultLowerTolerance = 0.0;
   public static final double defaultUpperTolerance = 0.0;
@@ -217,8 +216,8 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
     new CurrentLimitsConfigs()
         .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
         .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-        .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-        .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+        .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+        .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
         .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
         .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
     slot0,
@@ -274,8 +273,8 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
           new CurrentLimitsConfigs()
               .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
               .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-              .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-              .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+              .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+              .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
               .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
               .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
           slot0,

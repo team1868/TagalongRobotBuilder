@@ -50,10 +50,10 @@ public class TagalongSubsystemConf {
   public String getHeader() {
     String header = "package frc.robot.subsystems.confs;\n";
     for (var microspec : _microspecs) {
-      header += "\nimport tagalong.subsystems.confs.micro.%sConf;\n".formatted(
+      header += "\nimport tagalong.subsystems.micro.confs.%sConf;\n".formatted(
           microspec.getVariant().name()
       );
-      header += "import frc.robot.subsystems.confs.micro."
+      header += "import frc.robot.subsystems.micro.confs."
           + FileUtils.convertToCapital(_robotVersion)
           + "%s%sConf;\n".formatted(_subsystemSpec._capitalName, microspec._capitalName);
     }

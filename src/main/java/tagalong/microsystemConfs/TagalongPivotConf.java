@@ -50,7 +50,7 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   import tagalong.units.AccelerationUnits;
   import tagalong.units.DistanceUnits;
   import tagalong.units.VelocityUnits;
-  import tagalong.subsystems.confs.micro.PivotConf;
+  import tagalong.subsystems.micro.confs.PivotConf;
 """;
     // clang-format on
   }
@@ -198,8 +198,8 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
         new CurrentLimitsConfigs()
             .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
             .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-            .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-            .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+            .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+            .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
             .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
             .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
         slot0,
@@ -306,8 +306,8 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
     new CurrentLimitsConfigs()
         .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
         .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-        .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-        .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+        .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+        .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
         .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
         .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
     slot0,
