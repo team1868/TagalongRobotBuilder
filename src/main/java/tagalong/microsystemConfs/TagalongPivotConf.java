@@ -137,6 +137,9 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   public static final DistanceUnits profileOffsetUnit = DistanceUnits.DEGREE;
   public static final double profileOffsetValue = 0.0;
 
+  public static final double mech2dDim = 1.0;
+  public static final double rootX = 0.0;
+  public static final double rootY = 0.0;
   public static final double pivotMOI = 0.0;
   public static final double pivotLengthM = 0.0;
 
@@ -213,6 +216,9 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
         ffOffsetValue,
         profileOffsetUnit,
         profileOffsetValue,
+        mech2dDim,
+        rootX,
+        rootY,
         pivotMOI,
         pivotLengthM
     );
@@ -271,6 +277,9 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   double ffOffsetValue,
   DistanceUnits profileOffsetUnit,
   double profileOffsetValue,
+  double mech2dDim,
+  double rootX,
+  double rootY,
   double pivotMOI,
   double pivotLengthM) {
   super(
@@ -321,6 +330,9 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
     ffOffsetValue,
     profileOffsetUnit,
     profileOffsetValue,
+    mech2dDim,
+    rootX,
+    rootY,
     pivotMOI,
     pivotLengthM
 );

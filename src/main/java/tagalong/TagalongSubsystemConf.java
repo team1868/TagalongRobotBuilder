@@ -53,7 +53,7 @@ public class TagalongSubsystemConf {
       header += "\nimport tagalong.subsystems.micro.confs.%sConf;\n".formatted(
           microspec.getVariant().name()
       );
-      header += "import frc.robot.subsystems.micro.confs."
+      header += "import frc.robot.subsystems.confs.micro."
           + FileUtils.convertToCapital(_robotVersion)
           + "%s%sConf;\n".formatted(_subsystemSpec._capitalName, microspec._capitalName);
     }

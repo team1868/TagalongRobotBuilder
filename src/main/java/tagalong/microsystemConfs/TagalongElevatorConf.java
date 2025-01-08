@@ -116,9 +116,11 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
 
   public static final MassUnits carriageMassUnit = MassUnits.KILOGRAMS;
   public static final double carriageMassValue = 0.0;
-  public static final int mech2dDim = 0;
-  public static final int lineLength = 0;
-  public static final int angle = 0;
+  public static final double mech2dDim = 1.0;
+  public static final double rootX = 0.0;
+  public static final double rootY = 0.0;
+  public static final double lineLength = 0.0;
+  public static final double angle = 0.0;
   public static final DistanceUnits drumDiameterUnits = DistanceUnits.METER;
   public static final double drumDiameter = 0.0;
 
@@ -183,9 +185,11 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
   PIDSGVAConstants slot2,
   MassUnits carriageMassUnit,
   double carriageMassValue,
-  int mech2dDim,
-  int lineLength,
-  int angle,
+  double mech2dDim,
+  double rootX,
+  double rootY,
+  double lineLength,
+  double angle,
   PIDSGVAConstants simSlot0,
   PIDSGVAConstants simSlot1,
   PIDSGVAConstants simSlot2,
@@ -226,6 +230,8 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
     carriageMassUnit,
     carriageMassValue,
     mech2dDim,
+    rootX,
+    rootY,
     lineLength,
     angle,
     simSlot0,
@@ -283,6 +289,8 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
           carriageMassUnit,
           carriageMassValue,
           mech2dDim,
+          rootX,
+          rootY,
           lineLength,
           angle,
           simSlot0,
