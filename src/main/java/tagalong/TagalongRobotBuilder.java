@@ -33,6 +33,7 @@ public class TagalongRobotBuilder {
     // _dir = dir;
   }
 
+  // TODO: update version of tagalonglib so no error in generated code
   public static void main(String args[]) {
     MicrosystemTypes type = MicrosystemTypes.Default;
     MicrosystemVariants variant = MicrosystemVariants.Default;

@@ -16,10 +16,10 @@ public class TagalongVendorDep {
     String vendorDep =
         // clang-format off
 """
-{
+{ 
   "fileName": "TagalongLib.json",
   "name": "TagalongLib",
-  "version": "%s",
+  "version": "%s", 
   "frcYear": "2024",
   "uuid": "32b609c1-86c7-4c61-a0f7-7debd9d77017",
   "mavenUrls": [
@@ -36,7 +36,7 @@ public class TagalongVendorDep {
   "jniDependencies": [],
   "cppDependencies": []
 }
-"""
+""" 
         // clang-format on
         .formatted(tagalongLibVersion, tagalongLibVersion);
 

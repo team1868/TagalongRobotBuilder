@@ -69,7 +69,8 @@ public final class Constants{
           } else {
             constString += tempString.replaceAll(
                 "(class Constants)  *\\{",
-                "class Constants{\n  public static final RobotVersions curRobot = RobotVersions.%s;\n"
+                ("class Constants{\n  public static final RobotVersions curRobot = "
+                 + "RobotVersions.%s;\n")
                     .formatted(_robotVersion.toUpperCase())
             );
             constString += "\n";
@@ -195,7 +196,11 @@ public final class Constants{
         String fullEnumString = "";
         if (isNewRobotVersion) {
           for (int i = 0; i < newVersionEnums.length; i++) {
-            fullEnumString += newVersionEnums[i] + ",\n";
+            if (i == newVersionEnums.length - 1) {
+              fullEnumString += newVersionEnums[i] + ";\n";
+            } else {
+              fullEnumString += newVersionEnums[i] + ",\n";
+            }
           }
 
           fullEnumString += _robotVersion + "(";
@@ -205,8 +210,9 @@ public final class Constants{
                 _robotVersion + capitalSubsystemNames[i] + ".java and associated microsystem confs"
             );
 
-            fullEnumString +=
-                "%s%sConf.construct(), ".formatted(_robotVersion, capitalSubsystemNames[i]);
+            fullEnumString += "%s%sConf.construct(), ".formatted(
+                _robotVersion.toLowerCase(), capitalSubsystemNames[i]
+            );
           }
 
           // TODO add conf file for the singular new robot version +new subsystem combo here
@@ -280,7 +286,7 @@ public enum RobotVersions {
   private String getConstructor() {
     String classString = "";
     classString += "  RobotVersions(";
-    classString += "%sConf %sConf".formatted(_spec._capitalName, _spec._camelName);
+    classString += "%sConf %sConf".formatted(_spec._camelName, _spec._camelName);
     classString += ") {\n";
     classString += "    this.%sConf = %sConf;\n".formatted(_spec._camelName, _spec._camelName);
     classString += "  }\n}\n";
