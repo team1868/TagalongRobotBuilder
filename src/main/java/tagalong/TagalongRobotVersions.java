@@ -20,7 +20,7 @@ public class TagalongRobotVersions {
 
   public TagalongRobotVersions(String dir, TagalongSubsystemSpec spec, String robotVersion) {
     _dir = dir;
-    _robotVersion = robotVersion.toUpperCase();
+    _robotVersion = robotVersion;
     _spec = spec;
   }
 
@@ -286,7 +286,7 @@ public enum RobotVersions {
   private String getConstructor() {
     String classString = "";
     classString += "  RobotVersions(";
-    classString += "%sConf %sConf".formatted(_spec._camelName, _spec._camelName);
+    classString += "%sConf %sConf".formatted(_spec._capitalName, _spec._camelName);
     classString += ") {\n";
     classString += "    this.%sConf = %sConf;\n".formatted(_spec._camelName, _spec._camelName);
     classString += "  }\n}\n";
