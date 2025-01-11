@@ -117,10 +117,11 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
   public static final MassUnits carriageMassUnit = MassUnits.KILOGRAMS;
   public static final double carriageMassValue = 0.0;
   public static final double mech2dDim = 1.0;
-  public static final double rootX = 0.0;
+  public static final String rootName = "Elevator Base";
+  public static final double rootX = 0.5;
   public static final double rootY = 0.0;
-  public static final double lineLength = 0.0;
-  public static final double angle = 0.0;
+  public static final double lineLength = 0.3;
+  public static final double angle = 90;
   public static final DistanceUnits drumDiameterUnits = DistanceUnits.METER;
   public static final double drumDiameter = 0.0;
 
@@ -186,6 +187,7 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
   MassUnits carriageMassUnit,
   double carriageMassValue,
   double mech2dDim,
+  String rootName,
   double rootX,
   double rootY,
   double lineLength,
@@ -230,6 +232,7 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
     carriageMassUnit,
     carriageMassValue,
     mech2dDim,
+    rootName,
     rootX,
     rootY,
     lineLength,
@@ -289,6 +292,7 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
           carriageMassUnit,
           carriageMassValue,
           mech2dDim,
+          rootName,
           rootX,
           rootY,
           lineLength,

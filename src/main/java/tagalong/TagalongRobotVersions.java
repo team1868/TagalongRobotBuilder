@@ -164,7 +164,7 @@ public final class Constants{
           );
           newConstructorArgs +=
               "%sConf %sConf, ".formatted(capitalSubsystemNames[i], camelSubsystemNames[i]);
-          newConstructorAssignment += "\n    this.%sConf = %sConf".formatted(
+          newConstructorAssignment += "\n    this.%sConf = %sConf;".formatted(
               camelSubsystemNames[i], camelSubsystemNames[i]
           );
         }
@@ -172,7 +172,7 @@ public final class Constants{
             "\n  public final %sConf %sConf;".formatted(_spec._capitalName, _spec._capitalName);
         newConstructorArgs += "%sConf %sConf".formatted(_spec._capitalName, _spec._capitalName);
         newConstructorAssignment +=
-            "\n    this.%sConf = %sConf".formatted(_spec._camelName, _spec._camelName);
+            "\n    this.%sConf = %sConf;".formatted(_spec._camelName, _spec._camelName);
 
         boolean isNewRobotVersion = true;
         String[] newVersionEnums = new String[versionNames.length - 1];

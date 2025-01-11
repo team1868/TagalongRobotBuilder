@@ -138,6 +138,7 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   public static final double profileOffsetValue = 0.0;
 
   public static final double mech2dDim = 1.0;
+  public static final String rootName = "Pivot Base";
   public static final double rootX = 0.0;
   public static final double rootY = 0.0;
   public static final double pivotMOI = 0.0;
@@ -217,6 +218,7 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
         profileOffsetUnit,
         profileOffsetValue,
         mech2dDim,
+        rootName,
         rootX,
         rootY,
         pivotMOI,
@@ -278,6 +280,7 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   DistanceUnits profileOffsetUnit,
   double profileOffsetValue,
   double mech2dDim,
+  String rootName,
   double rootX,
   double rootY,
   double pivotMOI,
@@ -331,6 +334,7 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
     profileOffsetUnit,
     profileOffsetValue,
     mech2dDim,
+    rootName,
     rootX,
     rootY,
     pivotMOI,

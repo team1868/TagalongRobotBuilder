@@ -138,6 +138,7 @@ public class TagalongRollerConf extends TagalongMicrosystemConf {
       new PIDSGVAConstants(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
   public static final double mech2dDim = 1.0;
+  public static final String rootName = "Roller Base";
   public static final double rootX = 0.0;
   public static final double rootY = 0.0;
   public static int simNumLigaments = 0;
@@ -186,6 +187,7 @@ public class TagalongRollerConf extends TagalongMicrosystemConf {
         simSlot1,
         simSlot2,
         mech2dDim,
+        rootName,
         rootX,
         rootY,
         simNumLigaments,
@@ -230,6 +232,7 @@ public %s(
   PIDSGVAConstants simSlot1,
   PIDSGVAConstants simSlot2,
   double mech2dDim,
+  String rootName,
   double rootX,
   double rootY,
   int simNumLigaments,
@@ -267,6 +270,7 @@ public %s(
       simSlot1,
       simSlot2,
       mech2dDim,
+      rootName,
       rootX,
       rootY,
       simNumLigaments,
