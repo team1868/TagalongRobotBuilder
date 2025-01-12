@@ -14,9 +14,11 @@ import java.io.IOException;
 import tagalong.utils.FileUtils;
 
 public class TagalongRobotVersions {
+  public static boolean _redundantSubsystem = false;
+
   private String _dir;
   private TagalongSubsystemSpec _spec;
-  private String _robotVersion; // compbot
+  private String _robotVersion; // compbot;
 
   public TagalongRobotVersions(String dir, TagalongSubsystemSpec spec, String robotVersion) {
     _dir = dir;
@@ -123,26 +125,24 @@ public final class Constants{
         }
         readFile.close();
 
-        // System.out.println(allEnums);
-        String[] versionNames = allEnums.split("\\)\\)");
-        for (int i = 0; i < versionNames.length - 1; i++) {
+        String[] versionNames = allEnums.split("\\)\\),|\\)\\);");
+        for (int i = 0; i < versionNames.length; i++) {
           versionNames[i] = versionNames[i].split("\\(")[0].replace(" ", "").replace("\t", "");
-          versionNames[i] = versionNames[i].toUpperCase();
-          // System.out.println(versionNames[i]);
+          versionNames[i] = versionNames[i].substring(0, 1).toUpperCase()
+              + versionNames[i].substring(1).toLowerCase();
         }
 
-        // System.out.println(allSubsystems);
         String[] capitalSubsystemNames = allSubsystems.split(";");
         String[] camelSubsystemNames = new String[capitalSubsystemNames.length];
-        for (int i = 0; i < versionNames.length - 1; i++) {
+        for (int i = 0; i < capitalSubsystemNames.length; i++) {
           capitalSubsystemNames[i] = capitalSubsystemNames[i]
-                                         .replace("public", "")
-                                         .replace("final", "")
-                                         .replace(" ", "")
+                                         .replace("public ", "")
+                                         .replace("final ", "")
                                          .replace("\t", "")
-                                         .split("Conf")[0];
+                                         .replaceAll("\\s+[a-z]+Conf", "")
+                                         .replace(" ", "")
+                                         .replace("Conf", "");
           camelSubsystemNames[i] = FileUtils.convertToCamel(capitalSubsystemNames[i]);
-          // System.out.println(subsystemNames[i]);
         }
 
         // readFile = new BufferedReader(new FileReader(robotVersFile));
@@ -158,77 +158,75 @@ public final class Constants{
         String newMemberVariables = "";
         String newConstructorArgs = "";
         String newConstructorAssignment = "";
-        for (int i = 0; i < camelSubsystemNames.length - 1; i++) {
+        for (int i = 0; i < camelSubsystemNames.length; i++) {
           newMemberVariables += "\n  public final %sConf %sConf;".formatted(
               capitalSubsystemNames[i], camelSubsystemNames[i]
           );
           newConstructorArgs +=
-              "%sConf %sConf, ".formatted(capitalSubsystemNames[i], camelSubsystemNames[i]);
+              "%sConf %sConf".formatted(capitalSubsystemNames[i], camelSubsystemNames[i]);
           newConstructorAssignment += "\n    this.%sConf = %sConf;".formatted(
               camelSubsystemNames[i], camelSubsystemNames[i]
           );
+          if (capitalSubsystemNames[i].equals(_spec._capitalName)) {
+            _redundantSubsystem = true;
+          }
         }
-        newMemberVariables +=
-            "\n  public final %sConf %sConf;".formatted(_spec._capitalName, _spec._capitalName);
-        newConstructorArgs += "%sConf %sConf".formatted(_spec._capitalName, _spec._capitalName);
-        newConstructorAssignment +=
-            "\n    this.%sConf = %sConf;".formatted(_spec._camelName, _spec._camelName);
-
+        if (!_redundantSubsystem) {
+          newMemberVariables +=
+              "\n  public final %sConf %sConf;".formatted(_spec._capitalName, _spec._camelName);
+          newConstructorArgs += "%sConf %sConf".formatted(_spec._capitalName, _spec._camelName);
+          newConstructorAssignment +=
+              "\n    this.%sConf = %sConf;".formatted(_spec._camelName, _spec._camelName);
+        }
         boolean isNewRobotVersion = true;
-        String[] newVersionEnums = new String[versionNames.length - 1];
-        for (int i = 0; i < versionNames.length - 1; i++) {
+        String[] newVersionEnums = new String[versionNames.length];
+        for (int i = 0; i < versionNames.length; i++) {
           newVersionEnums[i] = versionNames[i].toUpperCase() + "(";
-          for (int j = 0; j < capitalSubsystemNames.length - 1; j++) {
-            newVersionEnums[i] += "%s%sConf.construct(), ".formatted(
-                FileUtils.convertToCapital(versionNames[i]), capitalSubsystemNames[j]
-            );
+          for (int j = 0; j < capitalSubsystemNames.length; j++) {
+            newVersionEnums[i] +=
+                "%s%sConf.construct()".formatted(versionNames[i], capitalSubsystemNames[j]);
           }
           // TODO add conf file here, the filename is printed to standard out
           System.out.println(
               versionNames[i] + _spec._capitalName + ".java and associated microsystem confs"
           );
-          newVersionEnums[i] += "%s%sConf.construct()".formatted(
-                                    FileUtils.convertToCapital(versionNames[i]), _spec._capitalName
-                                )
-              + ")";
-
-          if (_robotVersion.toUpperCase() == versionNames[i].toUpperCase())
+          if (!_redundantSubsystem) {
+            newVersionEnums[i] +=
+                ", %s%sConf.construct()".formatted(versionNames[i], _spec._capitalName);
+          }
+          newVersionEnums[i] += ")";
+          if (_robotVersion.equals(versionNames[i])) {
             isNewRobotVersion = false;
+          }
         }
 
         String fullEnumString = "";
         if (isNewRobotVersion) {
           for (int i = 0; i < newVersionEnums.length; i++) {
-            if (i == newVersionEnums.length - 1) {
-              fullEnumString += newVersionEnums[i] + ";\n";
-            } else {
-              fullEnumString += newVersionEnums[i] + ",\n";
-            }
+            fullEnumString += newVersionEnums[i] + ",\n";
           }
 
           fullEnumString += _robotVersion.toUpperCase() + "(";
-          for (int i = 0; i < capitalSubsystemNames.length - 1; i++) {
+          for (int i = 0; i < capitalSubsystemNames.length; i++) {
             // TODO add conf file for each subsystem here
             System.out.println(
                 _robotVersion + capitalSubsystemNames[i] + ".java and associated microsystem confs"
             );
 
-            fullEnumString += "%s%sConf.construct(), ".formatted(
-                FileUtils.convertToCapital(_robotVersion), capitalSubsystemNames[i]
-            );
+            fullEnumString +=
+                "%s%sConf.construct()".formatted(_robotVersion, capitalSubsystemNames[i]);
           }
 
           // TODO add conf file for the singular new robot version +new subsystem combo here
-          fullEnumString += "%s%sConf.construct()".formatted(
-                                FileUtils.convertToCapital(_robotVersion), _spec._capitalName
-                            )
-              + ");";
-
-        } else {
-          for (int i = 0; i < newVersionEnums.length - 1; i++) {
-            fullEnumString += newVersionEnums[i] + ",\n";
+          if (!_redundantSubsystem) {
+            fullEnumString += "%s%sConf.construct())".formatted(_robotVersion, _spec._capitalName);
+          } else {
+            fullEnumString += ") ";
           }
-          fullEnumString += newVersionEnums[newVersionEnums.length - 1] + ";\n";
+        } else {
+          for (int i = 0; i < newVersionEnums.length; i++) {
+            fullEnumString += newVersionEnums[i];
+          }
         }
 
         // Full RobotVersions file
@@ -240,7 +238,7 @@ package frc.robot.constants;
 import frc.robot.subsystems.confs.*;
 
 public enum RobotVersions {
-%s
+%s;
 
 %s
 
@@ -266,7 +264,7 @@ public enum RobotVersions {
   private String getHeader() {
     String header = "package frc.robot.constants;\n";
     header += "\nimport frc.robot.subsystems.confs.%sConf;\n".formatted(
-        FileUtils.convertToCapital(_robotVersion) + _spec._capitalName
+        _robotVersion + _spec._capitalName
     );
     header += "import frc.robot.subsystems.confs.%sConf;".formatted(_spec._capitalName);
     header += "\n";
@@ -277,9 +275,7 @@ public enum RobotVersions {
     String classString = "";
     classString += "public enum RobotVersions {\n";
     classString += "  " + _robotVersion.toUpperCase() + "(";
-    classString += "%s%sConf.construct()".formatted(
-        FileUtils.convertToCapital(_robotVersion), _spec._capitalName
-    );
+    classString += "%s%sConf.construct()".formatted(_robotVersion, _spec._capitalName);
     classString += ");\n";
 
     classString +=

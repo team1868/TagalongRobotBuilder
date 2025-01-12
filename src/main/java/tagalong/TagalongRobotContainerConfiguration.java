@@ -63,13 +63,15 @@ public class TagalongRobotContainerConfiguration {
         if (line.contains("public class RobotContainer")) {
           lineModified = true;
           fileString += line;
-          fileString +=
-              "\n  public final %s _%s = new %s(Constants.curRobot.%sConf);\n".formatted(
-                  _capitalSubsystemName,
-                  _camelSubsystemName,
-                  _capitalSubsystemName,
-                  _camelSubsystemName
-              );
+          if (!TagalongRobotVersions._redundantSubsystem) {
+            fileString +=
+                "\n  public final %s _%s = new %s(Constants.curRobot.%sConf);\n".formatted(
+                    _capitalSubsystemName,
+                    _camelSubsystemName,
+                    _capitalSubsystemName,
+                    _camelSubsystemName
+                );
+          }
         }
 
         if (line.contains("public void onEnable() {")) {
