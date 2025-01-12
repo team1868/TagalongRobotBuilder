@@ -12,30 +12,29 @@ import tagalong.utils.FileUtils;
 
 public class TagalongVendorDep {
   public static void addVendorDep(String dir) {
-    String tagalongLibVersion = "2025.11.0110";
+    String tagalongLibVersion = "2025.11.0111";
     String vendorDep =
         // clang-format off
 """
-{ 
+{
   "fileName": "TagalongLib.json",
   "name": "TagalongLib",
-  "version": "%s", 
+  "version": "%s",
   "frcYear": "2025",
   "uuid": "32b609c1-86c7-4c61-a0f7-7debd9d77017",
-  "mavenUrls": [
-      "https://maven.pkg.github.com/team1868/TagalongLib"
-  ],
+  "mavenUrls": ["https://maven.pkg.github.com/Team1868/TagalongLib"],
   "jsonUrl": "https://github.com/team1868/TagalongLib/releases/latest/download/TagalongLib.json",
   "javaDependencies": [
-      {
-          "groupId": "com.tagalong.lib",
-          "artifactId": "tagalonglib-java",
-          "version": "%s"
-      }
+    {
+      "groupId": "com.tagalong.lib",
+      "artifactId": "tagalonglib-java",
+      "version": "%s"
+    }
   ],
   "jniDependencies": [],
   "cppDependencies": []
 }
+
 """ 
         // clang-format on
         .formatted(tagalongLibVersion, tagalongLibVersion);

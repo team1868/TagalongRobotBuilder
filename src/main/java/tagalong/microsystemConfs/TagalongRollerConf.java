@@ -141,8 +141,9 @@ public class TagalongRollerConf extends TagalongMicrosystemConf {
   public static final String rootName = "Roller Base";
   public static final double rootX = 0.0;
   public static final double rootY = 0.0;
-  public static int simNumLigaments = 0;
-  public static double rollerMOI = 0.0;
+  public static final int simNumLigaments = 0;
+  public static final double ligamentsLength = 0.0;
+  public static final double rollerMOI = 0.0;
     """;
     // clang-format on
   }
@@ -191,6 +192,7 @@ public class TagalongRollerConf extends TagalongMicrosystemConf {
         rootX,
         rootY,
         simNumLigaments,
+        ligamentsLength,
         rollerMOI
       );
     }
@@ -236,6 +238,7 @@ public %s(
   double rootX,
   double rootY,
   int simNumLigaments,
+  double ligamentsLength,
   double rollerMOI) {
     super(
       name,
@@ -274,6 +277,7 @@ public %s(
       rootX,
       rootY,
       simNumLigaments,
+      ligamentsLength,
       rollerMOI);
     }
 """.formatted(_className);

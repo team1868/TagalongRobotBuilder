@@ -72,7 +72,7 @@ public class TagalongRobotBuilder {
 
     scan.nextLine();
 
-    System.out.println("What robot version is this for?");
+    System.out.println("What robot version is this for? (no spaces)");
     robotVersion = scan.nextLine();
 
     // Name of subsystem

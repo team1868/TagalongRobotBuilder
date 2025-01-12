@@ -35,7 +35,7 @@ public class TagalongRobotContainerConfiguration {
       BufferedReader readFile = new BufferedReader(new FileReader(robotFile));
       String line;
       while ((line = readFile.readLine()) != null) {
-        if (line.contains("Constants;")) {
+        if (line.contains("subsystems.*")) {
           needsImportInjection = false;
         }
         if (line.contains("onEnable();")) {
@@ -63,9 +63,13 @@ public class TagalongRobotContainerConfiguration {
         if (line.contains("public class RobotContainer")) {
           lineModified = true;
           fileString += line;
-          fileString += "\n  public final %s _%s = new %s(Constants.curRobot.%sConf);\n".formatted(
-              _capitalSubsystemName, _camelSubsystemName, _capitalSubsystemName, _camelSubsystemName
-          );
+          fileString +=
+              "\n  public final %s _%s = new %s(Constants.curRobot.%sConf);\n".formatted(
+                  _capitalSubsystemName,
+                  _camelSubsystemName,
+                  _capitalSubsystemName,
+                  _camelSubsystemName
+              );
         }
 
         if (line.contains("public void onEnable() {")) {

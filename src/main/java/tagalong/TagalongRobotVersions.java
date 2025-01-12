@@ -177,19 +177,22 @@ public final class Constants{
         boolean isNewRobotVersion = true;
         String[] newVersionEnums = new String[versionNames.length - 1];
         for (int i = 0; i < versionNames.length - 1; i++) {
-          newVersionEnums[i] = versionNames[i] + "(";
+          newVersionEnums[i] = versionNames[i].toUpperCase() + "(";
           for (int j = 0; j < capitalSubsystemNames.length - 1; j++) {
-            newVersionEnums[i] +=
-                "%s%sConf.construct(), ".formatted(versionNames[i], capitalSubsystemNames[j]);
+            newVersionEnums[i] += "%s%sConf.construct(), ".formatted(
+                FileUtils.convertToCapital(versionNames[i]), capitalSubsystemNames[j]
+            );
           }
           // TODO add conf file here, the filename is printed to standard out
           System.out.println(
               versionNames[i] + _spec._capitalName + ".java and associated microsystem confs"
           );
-          newVersionEnums[i] +=
-              "%s%sConf.construct()".formatted(versionNames[i], _spec._capitalName) + ")";
+          newVersionEnums[i] += "%s%sConf.construct()".formatted(
+                                    FileUtils.convertToCapital(versionNames[i]), _spec._capitalName
+                                )
+              + ")";
 
-          if (_robotVersion == versionNames[i])
+          if (_robotVersion.toUpperCase() == versionNames[i].toUpperCase())
             isNewRobotVersion = false;
         }
 
@@ -203,7 +206,7 @@ public final class Constants{
             }
           }
 
-          fullEnumString += _robotVersion + "(";
+          fullEnumString += _robotVersion.toUpperCase() + "(";
           for (int i = 0; i < capitalSubsystemNames.length - 1; i++) {
             // TODO add conf file for each subsystem here
             System.out.println(
@@ -211,13 +214,15 @@ public final class Constants{
             );
 
             fullEnumString += "%s%sConf.construct(), ".formatted(
-                _robotVersion.toLowerCase(), capitalSubsystemNames[i]
+                FileUtils.convertToCapital(_robotVersion), capitalSubsystemNames[i]
             );
           }
 
           // TODO add conf file for the singular new robot version +new subsystem combo here
-          fullEnumString +=
-              "%s%sConf.construct()".formatted(_robotVersion, _spec._capitalName) + ");";
+          fullEnumString += "%s%sConf.construct()".formatted(
+                                FileUtils.convertToCapital(_robotVersion), _spec._capitalName
+                            )
+              + ");";
 
         } else {
           for (int i = 0; i < newVersionEnums.length - 1; i++) {
