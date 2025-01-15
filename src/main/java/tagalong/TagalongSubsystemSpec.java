@@ -164,7 +164,9 @@ import tagalong.subsystems.TagalongSubsystemBase;
       _str += " _%s;\n".formatted(microSpec._camelName);
     }
     _str += "\n";
-    _str += "  public final %sConf _%sConf;\n\n".formatted(_capitalName, _name.toLowerCase());
+    _str += "  public final %sConf _%sConf;\n\n".formatted(
+        _capitalName, FileUtils.convertToCamel(_name)
+    );
     logging();
   }
 
@@ -204,7 +206,9 @@ import tagalong.subsystems.TagalongSubsystemBase;
         + "checkInitStatus" + paren + "{\n  return";
 
     for (int i = 0; i < _microspecs.size(); i++) {
-      _str += "  _%s.checkInitStatus()".formatted(_microspecs.get(i).getName().toLowerCase());
+      _str +=
+          "  _%s.checkInitStatus()".formatted(FileUtils.convertToCamel(_microspecs.get(i).getName())
+          );
       if (i < _microspecs.size() - 1) {
         _str += " && ";
       } else {
@@ -260,8 +264,8 @@ import tagalong.subsystems.TagalongSubsystemBase;
       }
     }
 
-    _str +=
-        // clang-format off
+  _str +=
+      // clang-format off
 """
       case 0:
       default:

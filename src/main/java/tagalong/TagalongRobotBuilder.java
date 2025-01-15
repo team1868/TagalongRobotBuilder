@@ -288,13 +288,23 @@ public class TagalongRobotBuilder {
     new TagalongGradleBuildConfiguration(projPath).writeConf();
     TagalongVendorDep.addVendorDep(projPath);
     try {
-      Process p = Runtime.getRuntime().exec(new String[] {
-          "bash",
-          "-c",
-          "find " + projPath + "/src"
-              + " -iname '*.java'| xargs clang-format -i -style=./.clang-format"
-      });
-      p.waitFor(15, TimeUnit.SECONDS);
+      String osName = System.getProperty("os.name").toLowerCase();
+      if (osName.contains("mac")) {
+        Process p = Runtime.getRuntime().exec(new String[] {
+            "bash",
+            "-c",
+            "find " + projPath + "/src"
+                + " -iname '*.java'| xargs clang-format -i -style=./.clang-format"});
+        p.waitFor(15, TimeUnit.SECONDS);
+      } else if (osName.contains("win")) {
+        Process p = Runtime.getRuntime().exec(new String[] {
+            "cmd.exe",
+            "/c",
+            "FOR /R \"" + projPath
+                + "\\src\" %I IN (*.java) DO clang-format \"%I\" -i -style=file:.\\.clang-format"});
+        p.waitFor(15, TimeUnit.SECONDS);
+        System.out.println("it ran");
+      }
     } catch (IOException e) {
       e.printStackTrace();
       System.err.println("Code formatting failed, subsystems will work fine");
