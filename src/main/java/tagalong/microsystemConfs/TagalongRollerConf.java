@@ -46,7 +46,7 @@ public class TagalongRollerConf extends TagalongMicrosystemConf {
   import tagalong.units.AccelerationUnits;
   import tagalong.units.DistanceUnits;
   import tagalong.units.VelocityUnits;
-  import tagalong.subsystems.confs.micro.RollerConf;
+  import tagalong.subsystems.micro.confs.RollerConf;
 """;
     // clang-format on
   }
@@ -137,8 +137,13 @@ public class TagalongRollerConf extends TagalongMicrosystemConf {
   public static final PIDSGVAConstants simSlot2 =
       new PIDSGVAConstants(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-  public static int simNumLigaments = 0;
-  public static double rollerMOI = 0.0;
+  public static final double mech2dDim = 1.0;
+  public static final String rootName = "Roller Base";
+  public static final double rootX = 0.0;
+  public static final double rootY = 0.0;
+  public static final int simNumLigaments = 0;
+  public static final double ligamentsLength = 0.0;
+  public static final double rollerMOI = 0.0;
     """;
     // clang-format on
   }
@@ -172,8 +177,8 @@ public class TagalongRollerConf extends TagalongMicrosystemConf {
         new CurrentLimitsConfigs()
           .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
           .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-          .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-          .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+          .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+          .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
           .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
           .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
         slot0,
@@ -182,7 +187,12 @@ public class TagalongRollerConf extends TagalongMicrosystemConf {
         simSlot0,
         simSlot1,
         simSlot2,
+        mech2dDim,
+        rootName,
+        rootX,
+        rootY,
         simNumLigaments,
+        ligamentsLength,
         rollerMOI
       );
     }
@@ -223,7 +233,12 @@ public %s(
   PIDSGVAConstants simSlot0,
   PIDSGVAConstants simSlot1,
   PIDSGVAConstants simSlot2,
+  double mech2dDim,
+  String rootName,
+  double rootX,
+  double rootY,
   int simNumLigaments,
+  double ligamentsLength,
   double rollerMOI) {
     super(
       name,
@@ -247,8 +262,8 @@ public %s(
       new CurrentLimitsConfigs()
         .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
         .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-        .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-        .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+        .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+        .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
         .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
         .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
       slot0,
@@ -257,7 +272,12 @@ public %s(
       simSlot0,
       simSlot1,
       simSlot2,
+      mech2dDim,
+      rootName,
+      rootX,
+      rootY,
       simNumLigaments,
+      ligamentsLength,
       rollerMOI);
     }
 """.formatted(_className);

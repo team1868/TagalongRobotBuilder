@@ -50,7 +50,7 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   import tagalong.units.AccelerationUnits;
   import tagalong.units.DistanceUnits;
   import tagalong.units.VelocityUnits;
-  import tagalong.subsystems.confs.micro.PivotConf;
+  import tagalong.subsystems.micro.confs.PivotConf;
 """;
     // clang-format on
   }
@@ -137,6 +137,10 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   public static final DistanceUnits profileOffsetUnit = DistanceUnits.DEGREE;
   public static final double profileOffsetValue = 0.0;
 
+  public static final double mech2dDim = 1.0;
+  public static final String rootName = "Pivot Base";
+  public static final double rootX = 0.0;
+  public static final double rootY = 0.0;
   public static final double pivotMOI = 0.0;
   public static final double pivotLengthM = 0.0;
 
@@ -198,8 +202,8 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
         new CurrentLimitsConfigs()
             .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
             .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-            .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-            .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+            .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+            .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
             .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
             .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
         slot0,
@@ -213,6 +217,10 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
         ffOffsetValue,
         profileOffsetUnit,
         profileOffsetValue,
+        mech2dDim,
+        rootName,
+        rootX,
+        rootY,
         pivotMOI,
         pivotLengthM
     );
@@ -271,6 +279,10 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   double ffOffsetValue,
   DistanceUnits profileOffsetUnit,
   double profileOffsetValue,
+  double mech2dDim,
+  String rootName,
+  double rootX,
+  double rootY,
   double pivotMOI,
   double pivotLengthM) {
   super(
@@ -306,8 +318,8 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
     new CurrentLimitsConfigs()
         .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
         .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-        .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-        .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+        .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+        .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
         .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
         .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
     slot0,
@@ -321,6 +333,10 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
     ffOffsetValue,
     profileOffsetUnit,
     profileOffsetValue,
+    mech2dDim,
+    rootName,
+    rootX,
+    rootY,
     pivotMOI,
     pivotLengthM
 );

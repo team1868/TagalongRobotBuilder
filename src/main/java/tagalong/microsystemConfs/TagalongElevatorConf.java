@@ -47,7 +47,7 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
   import tagalong.units.DistanceUnits;
   import tagalong.units.MassUnits;
   import tagalong.units.VelocityUnits;
-  import tagalong.subsystems.confs.micro.ElevatorConf;
+  import tagalong.subsystems.micro.confs.ElevatorConf;
 """;
     // clang-format on
   }
@@ -116,9 +116,12 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
 
   public static final MassUnits carriageMassUnit = MassUnits.KILOGRAMS;
   public static final double carriageMassValue = 0.0;
-  public static final int mech2dDim = 0;
-  public static final int lineLength = 0;
-  public static final int angle = 0;
+  public static final double mech2dDim = 1.0;
+  public static final String rootName = "Elevator Base";
+  public static final double rootX = 0.5;
+  public static final double rootY = 0.0;
+  public static final double lineLength = 0.3;
+  public static final double angle = 90;
   public static final DistanceUnits drumDiameterUnits = DistanceUnits.METER;
   public static final double drumDiameter = 0.0;
 
@@ -141,7 +144,6 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
   public static final DistanceUnits positionalLimitsUnits = DistanceUnits.METER;
   public static final double positionalLimitsMin = 0.0;
   public static final double positionalLimitsMax = 0.0;
-  public static final double maxScopeRot = 1.0;
   public static final DistanceUnits defaultTolerancesUnit = DistanceUnits.METER;
   public static final double defaultLowerTolerance = 0.0;
   public static final double defaultUpperTolerance = 0.0;
@@ -184,9 +186,12 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
   PIDSGVAConstants slot2,
   MassUnits carriageMassUnit,
   double carriageMassValue,
-  int mech2dDim,
-  int lineLength,
-  int angle,
+  double mech2dDim,
+  String rootName,
+  double rootX,
+  double rootY,
+  double lineLength,
+  double angle,
   PIDSGVAConstants simSlot0,
   PIDSGVAConstants simSlot1,
   PIDSGVAConstants simSlot2,
@@ -217,8 +222,8 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
     new CurrentLimitsConfigs()
         .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
         .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-        .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-        .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+        .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+        .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
         .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
         .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
     slot0,
@@ -227,6 +232,9 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
     carriageMassUnit,
     carriageMassValue,
     mech2dDim,
+    rootName,
+    rootX,
+    rootY,
     lineLength,
     angle,
     simSlot0,
@@ -274,8 +282,8 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
           new CurrentLimitsConfigs()
               .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
               .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
-              .withSupplyCurrentThreshold(motorCurrentLimitSupplyContinuousLimit)
-              .withSupplyTimeThreshold(motorCurrentLimitPeakDuration)
+              .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+              .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
               .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
               .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
           slot0,
@@ -284,6 +292,9 @@ public class TagalongElevatorConf extends TagalongMicrosystemConf {
           carriageMassUnit,
           carriageMassValue,
           mech2dDim,
+          rootName,
+          rootX,
+          rootY,
           lineLength,
           angle,
           simSlot0,

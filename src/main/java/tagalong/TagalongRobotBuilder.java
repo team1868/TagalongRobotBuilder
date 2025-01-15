@@ -33,6 +33,7 @@ public class TagalongRobotBuilder {
     // _dir = dir;
   }
 
+  // TODO: update version of tagalonglib so no error in generated code
   public static void main(String args[]) {
     MicrosystemTypes type = MicrosystemTypes.Default;
     MicrosystemVariants variant = MicrosystemVariants.Default;
@@ -71,7 +72,7 @@ public class TagalongRobotBuilder {
 
     scan.nextLine();
 
-    System.out.println("What robot version is this for?");
+    System.out.println("What robot version is this for? (no spaces)");
     robotVersion = scan.nextLine();
 
     // Name of subsystem
@@ -170,22 +171,22 @@ public class TagalongRobotBuilder {
         );
         switch (scan.nextInt()) {
           case 1:
-            motorTypes.add("KRAKEN_X60");
+            motorTypes.add("Motors.KRAKEN_X60");
             break;
           case 2:
-            motorTypes.add("KRAKEN_X60_FOC");
+            motorTypes.add("Motors.KRAKEN_X60_FOC");
             break;
           case 3:
-            motorTypes.add("FALCON500");
+            motorTypes.add("Motors.FALCON500");
             break;
           case 4:
-            motorTypes.add("FALCON500_FOC");
+            motorTypes.add("Motors.FALCON500_FOC");
             break;
           case 5:
-            motorTypes.add("KRAKEN_X44");
+            motorTypes.add("Motors.KRAKEN_X44");
             break;
           case 6:
-            motorTypes.add("KRAKEN_X44_FOC");
+            motorTypes.add("Motors.KRAKEN_X44_FOC");
             break;
         }
 
@@ -291,7 +292,8 @@ public class TagalongRobotBuilder {
           "bash",
           "-c",
           "find " + projPath + "/src"
-              + " -iname '*.java'| xargs clang-format -i -style=./.clang-format"});
+              + " -iname '*.java'| xargs clang-format -i -style=./.clang-format"
+      });
       p.waitFor(15, TimeUnit.SECONDS);
     } catch (IOException e) {
       e.printStackTrace();
