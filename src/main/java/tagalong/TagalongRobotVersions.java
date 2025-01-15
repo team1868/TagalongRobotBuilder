@@ -164,6 +164,9 @@ public final class Constants{
           );
           newConstructorArgs +=
               "%sConf %sConf".formatted(capitalSubsystemNames[i], camelSubsystemNames[i]);
+          if (i < (camelSubsystemNames.length - 1)) {
+            newConstructorArgs += ",";
+          }
           newConstructorAssignment += "\n    this.%sConf = %sConf;".formatted(
               camelSubsystemNames[i], camelSubsystemNames[i]
           );
@@ -174,7 +177,7 @@ public final class Constants{
         if (!_redundantSubsystem) {
           newMemberVariables +=
               "\n  public final %sConf %sConf;".formatted(_spec._capitalName, _spec._camelName);
-          newConstructorArgs += "%sConf %sConf".formatted(_spec._capitalName, _spec._camelName);
+          newConstructorArgs += ", %sConf %sConf".formatted(_spec._capitalName, _spec._camelName);
           newConstructorAssignment +=
               "\n    this.%sConf = %sConf;".formatted(_spec._camelName, _spec._camelName);
         }
@@ -185,14 +188,18 @@ public final class Constants{
           for (int j = 0; j < capitalSubsystemNames.length; j++) {
             newVersionEnums[i] +=
                 "%s%sConf.construct()".formatted(versionNames[i], capitalSubsystemNames[j]);
+            if (j < capitalSubsystemNames.length - 1) {
+              newVersionEnums[i] += ", ";
+            }
           }
           // TODO add conf file here, the filename is printed to standard out
           System.out.println(
               versionNames[i] + _spec._capitalName + ".java and associated microsystem confs"
           );
           if (!_redundantSubsystem) {
-            newVersionEnums[i] +=
-                ", %s%sConf.construct()".formatted(versionNames[i], _spec._capitalName);
+            // newVersionEnums[i] +=
+            //     ", %s%sConf.construct()".formatted(versionNames[i], _spec._capitalName);
+            newVersionEnums[i] += ", null".formatted(versionNames[i], _spec._capitalName);
           }
           newVersionEnums[i] += ")";
           if (_robotVersion.equals(versionNames[i])) {
@@ -212,14 +219,18 @@ public final class Constants{
             System.out.println(
                 _robotVersion + capitalSubsystemNames[i] + ".java and associated microsystem confs"
             );
-
-            fullEnumString +=
-                "%s%sConf.construct()".formatted(_robotVersion, capitalSubsystemNames[i]);
+            // fullEnumString +=
+            //     "%s%sConf.construct()".formatted(_robotVersion, capitalSubsystemNames[i]);
+            fullEnumString += "null";
+            if (i < (capitalSubsystemNames.length - 1)) {
+              fullEnumString += ",";
+            }
           }
 
           // TODO add conf file for the singular new robot version +new subsystem combo here
           if (!_redundantSubsystem) {
-            fullEnumString += "%s%sConf.construct())".formatted(_robotVersion, _spec._capitalName);
+            fullEnumString +=
+                ", %s%sConf.construct())".formatted(_robotVersion, _spec._capitalName);
           } else {
             fullEnumString += ") ";
           }
