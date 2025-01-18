@@ -9,12 +9,12 @@ package tagalong.enums;
 public enum MicrosystemTypes {
   Default(),
   Rotational(new MicrosystemVariants[] {
-      MicrosystemVariants.Roller, MicrosystemVariants.Pivot,
+      MicrosystemVariants.Roller,
+      MicrosystemVariants.Pivot,
       // MicrosystemVariants.Flywheel,
       // MicrosystemVariants.PivotFused,
-      // MicrosystemVariants.PivotNoEncoder,
-      // MicrosystemVariants.PivotNoFused
-  }),
+      MicrosystemVariants.PivotNoEncoder,
+      MicrosystemVariants.PivotNoFused}),
   Linear(new MicrosystemVariants[] {
       MicrosystemVariants.Elevator
       // MicrosystemVariants.ElevatorTelescoping, MicrosystemVariants.TensionTelescoping

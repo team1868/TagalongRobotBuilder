@@ -13,10 +13,10 @@ public enum MicrosystemVariants {
   // Flywheel(),
   Elevator(),
   Pivot(),
-  Roller();
+  Roller(),
+  PivotNoFused(),
+  PivotNoEncoder();
   // PivotFused(),
-  // PivotNoFused(),
-  // PivotNoEncoder(),
   // Turret(),
   // ElevatorTelescoping(),
   // TensionTelescoping();

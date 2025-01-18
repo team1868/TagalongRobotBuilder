@@ -13,6 +13,7 @@ import tagalong.enums.MicrosystemVariants;
 
 public class TagalongPivotConf extends TagalongMicrosystemConf {
   private int _encoderDeviceID;
+  private MicrosystemVariants _pivotVariant;
   public TagalongPivotConf(
       String dir,
       String name,
@@ -26,6 +27,48 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   ) {
     super(dir, name, subsystemName, robotVersion, variant, motorTypes, motorDeviceIDs, canBus);
     _encoderDeviceID = encoderDeviceID;
+    _pivotVariant = variant;
+  }
+
+  public TagalongPivotConf(
+      String dir,
+      String name,
+      String subsystemName,
+      String robotVersion,
+      MicrosystemVariants variant,
+      ArrayList<String> motorTypes,
+      ArrayList<String> motorDeviceIDs,
+      String canBus,
+      int encoderDeviceID,
+      String encoderType
+  ) {
+    super(
+        dir,
+        name,
+        subsystemName,
+        robotVersion,
+        variant,
+        motorTypes,
+        motorDeviceIDs,
+        canBus,
+        encoderType
+    );
+    _encoderDeviceID = encoderDeviceID;
+    _pivotVariant = variant;
+  }
+
+  public TagalongPivotConf(
+      String dir,
+      String name,
+      String subsystemName,
+      String robotVersion,
+      MicrosystemVariants variant,
+      ArrayList<String> motorTypes,
+      ArrayList<String> motorDeviceIDs,
+      String canBus
+  ) {
+    super(dir, name, subsystemName, robotVersion, variant, motorTypes, motorDeviceIDs, canBus);
+    _pivotVariant = variant;
   }
 
   @Override
@@ -61,31 +104,49 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
         _microName, motorArrayToString(_motorTypes), arrayToString(_motorDeviceIDs), _canBus
     );
 
-    return baseString +
-        // clang-format off
+    if (_pivotVariant == MicrosystemVariants.PivotNoEncoder) {
+      return baseString +
+          // clang-format off
 """
-  public static final int[][] motorToPivotRatio = {{1, 1}};
-  public static final int[][] encoderToPivotRatio = {{1, 1}};
+public static final int[][] motorToPivotRatio = {{1, 1}};
 
-  public static final boolean motorCurrentLimitStatorEnableLimit = true;
-  public static final int motorCurrentLimitStatorPeakLimit = 80;
-  public static final boolean motorCurrentLimitSupplyEnableLimit = true;
-  public static final int motorCurrentLimitSupplyPeakLimit = 80;
-  public static final int motorCurrentLimitSupplyContinuousLimit = 80;
-  public static final double motorCurrentLimitPeakDuration = 0.8;
-
-  public static final Encoders encoderTypes = Encoders.CANCODER;
-  public static final int encoderDeviceID = %s;
-  public static final String encoderCanBus = "%s";
-
-  public static final boolean encoderConfigZeroToOne = true;
-  public static final boolean encoderConfigClockwisePositive = true;
-  public static final DistanceUnits encoderConfigMagnetOffsetUnit = DistanceUnits.ROTATION;
-  public static final double encoderConfigMagnetOffsetValue = 0.0;
+public static final boolean motorCurrentLimitStatorEnableLimit = true;
+public static final int motorCurrentLimitStatorPeakLimit = 80;
+public static final boolean motorCurrentLimitSupplyEnableLimit = true;
+public static final int motorCurrentLimitSupplyPeakLimit = 80;
+public static final int motorCurrentLimitSupplyContinuousLimit = 80;
+public static final double motorCurrentLimitPeakDuration = 0.8;
 
 """
-        // clang-format on
-        .formatted(_encoderDeviceID, _canBus);
+          // clang-format on
+          .formatted();
+    } else {
+      return baseString +
+          // clang-format off
+"""
+public static final int[][] motorToPivotRatio = {{1, 1}};
+public static final int[][] encoderToPivotRatio = {{1, 1}};
+
+public static final boolean motorCurrentLimitStatorEnableLimit = true;
+public static final int motorCurrentLimitStatorPeakLimit = 80;
+public static final boolean motorCurrentLimitSupplyEnableLimit = true;
+public static final int motorCurrentLimitSupplyPeakLimit = 80;
+public static final int motorCurrentLimitSupplyContinuousLimit = 80;
+public static final double motorCurrentLimitPeakDuration = 0.8;
+
+public static final Encoders encoderTypes = Encoders.CANCODER;
+public static final int encoderDeviceID = %s;
+public static final String encoderCanBus = "%s";
+
+public static final boolean encoderConfigZeroToOne = true;
+public static final boolean encoderConfigClockwisePositive = true;
+public static final DistanceUnits encoderConfigMagnetOffsetUnit = DistanceUnits.ROTATION;
+public static final double encoderConfigMagnetOffsetValue = 0.0;
+
+"""
+          // clang-format on
+          .formatted(_encoderDeviceID, _canBus);
+    }
   }
 
   @Override
@@ -155,14 +216,96 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
       new PIDSGVAConstants(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   /* -------- Current -------- */
   public static final PIDSGVAConstants simSlot2 =
-      new PIDSGVAConstants(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-
+      new PIDSGVAConstants(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); 
 """;
     // clang-format on
   }
 
   @Override
+  public String getConversions() {
+    // clang-format off
+    return """
+    public double motorToPivotRot(double motorRot) {
+      return motorRot * motorToPivotRatio[0][0] / motorToPivotRatio[0][1];
+    }
+
+    public double pivotRotToMotor(double pivotRot) {
+      return pivotRot * motorToPivotRatio[0][1] / motorToPivotRatio[0][0];
+    }
+
+    public double encoderToPivotRot(double encoderRot) {
+      return encoderRot * encoderToPivotRatio[0][0] / motorToPivotRatio[0][1];
+    }
+
+    public double pivotRotToEncoder(double pivotRot) {
+      return pivotRot * encoderToPivotRatio[0][1] / motorToPivotRatio[0][0];
+    }
+
+    """;
+    // clang-format on
+  }
+
+  @Override
   public String getMethods() {
+    if (_pivotVariant == MicrosystemVariants.PivotNoEncoder) {
+      // clang-format off
+    return
+    """
+          public static %s
+          construct() {
+        // placeholder
+        return new %s(
+          name,
+          motorTypes,
+          motorDeviceIDs,
+          motorCanBus,
+          motorDirection,
+          motorEnabledBrakeMode,
+          motorDisabledBrakeMode,
+          motorToPivotRatio,
+          positionalLimitsUnits,
+          positionalLimitsMin,
+          positionalLimitsMax,
+          trapezoidalLimitsUnits,
+          trapezoidalVelocityUnits,
+          trapezoidalLimitsVelocity,
+          trapezoidalAccelerationUnits,
+          trapezoidalLimitsAcceleration,
+          defaultTolerancesUnit,
+          defaultLowerTolerance,
+          defaultUpperTolerance,
+          feedForward,
+          simFeedForward,
+          new CurrentLimitsConfigs()
+              .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
+              .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
+              .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+              .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
+              .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
+              .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
+          slot0,
+          slot1,
+          slot2,
+          simSlot0,
+          simSlot1,
+          simSlot2,
+          closedLoopConfigsContinuousWrap,
+          ffOffsetUnit,
+          ffOffsetValue,
+          profileOffsetUnit,
+          profileOffsetValue,
+          mech2dDim,
+          rootName,
+          rootX,
+          rootY,
+          pivotMOI,
+          pivotLengthM
+      );
+      }
+      """ .formatted(_className, _className)
+      // clang-format off
+      ;
+    }
     // clang-format off
     return
   """
@@ -234,6 +377,104 @@ public class TagalongPivotConf extends TagalongMicrosystemConf {
   @Override
   public String getConstructor() {
     String baseString = "";
+    if (_pivotVariant == MicrosystemVariants.PivotNoEncoder){
+      baseString += "public " + _className +
+        // clang-format off
+"""
+(
+  String name,
+  Motors[] motorTypes,
+  int[] motorDeviceIDs,
+  String[] motorCanBus,
+  InvertedValue[] motorDirection,
+  NeutralModeValue[] motorEnabledBrakeMode,
+  NeutralModeValue[] motorDisabledBrakeMode,
+  int[][] motorToPivotRatio,
+  DistanceUnits rotationalLimitsUnits,
+  double rotationalMin,
+  double rotationalMax,
+  DistanceUnits trapezoidalLimitsUnits,
+  VelocityUnits trapezoidalVelocityUnits,
+  double trapezoidalLimitsVelocity,
+  AccelerationUnits trapezoidalAccelerationUnits,
+  double trapezoidalLimitsAcceleration,
+  DistanceUnits defaultTolerancesUnit,
+  double defaultLowerTolerance,
+  double defaultUpperTolerance,
+  FeedforwardConstants feedForward,
+  FeedforwardConstants simFeedForward,
+  CurrentLimitsConfigs currentLimitsConfigs,
+  PIDSGVAConstants slot0,
+  PIDSGVAConstants slot1,
+  PIDSGVAConstants slot2,
+  PIDSGVAConstants simSlot0,
+  PIDSGVAConstants simSlot1,
+  PIDSGVAConstants simSlot2,
+  boolean closedLoopConfigsContinuousWrap,
+  DistanceUnits ffOffsetUnit,
+  double ffOffsetValue,
+  DistanceUnits profileOffsetUnit,
+  double profileOffsetValue,
+  double mech2dDim,
+  String rootName,
+  double rootX,
+  double rootY,
+  double pivotMOI,
+  double pivotLengthM) {
+  super(
+    name,
+    motorTypes,
+    motorDeviceIDs,
+    motorCanBus,
+    motorDirection,
+    motorEnabledBrakeMode,
+    motorDisabledBrakeMode,
+    motorToPivotRatio,
+    positionalLimitsUnits,
+    positionalLimitsMin,
+    positionalLimitsMax,
+    trapezoidalLimitsUnits,
+    trapezoidalVelocityUnits,
+    trapezoidalLimitsVelocity,
+    trapezoidalAccelerationUnits,
+    trapezoidalLimitsAcceleration,
+    defaultTolerancesUnit,
+    defaultLowerTolerance,
+    defaultUpperTolerance,
+    feedForward,
+    simFeedForward,
+    new CurrentLimitsConfigs()
+        .withStatorCurrentLimit(motorCurrentLimitStatorPeakLimit)
+        .withSupplyCurrentLimit(motorCurrentLimitSupplyPeakLimit)
+        .withSupplyCurrentLowerLimit(motorCurrentLimitSupplyContinuousLimit)
+        .withSupplyCurrentLowerTime(motorCurrentLimitPeakDuration)
+        .withStatorCurrentLimitEnable(motorCurrentLimitStatorEnableLimit)
+        .withSupplyCurrentLimitEnable(motorCurrentLimitSupplyEnableLimit),
+    slot0,
+    slot1,
+    slot2,
+    simSlot0,
+    simSlot1,
+    simSlot2,
+    closedLoopConfigsContinuousWrap,
+    ffOffsetUnit,
+    ffOffsetValue,
+    profileOffsetUnit,
+    profileOffsetValue,
+    mech2dDim,
+    rootName,
+    rootX,
+    rootY,
+    pivotMOI,
+    pivotLengthM
+);
+}
+"""
+          // clang-format on
+          ;
+      return baseString;
+    }
+
     baseString += "public " + _className +
         // clang-format off
 """

@@ -49,6 +49,7 @@ public class TagalongRobotBuilder {
     ArrayList<String> motorTypes = new ArrayList<>();
     String canBus = "";
     ArrayList<String> motorDeviceIDs = new ArrayList<String>();
+    String unfusedEncoderType = "";
 
     Scanner scan = new Scanner(System.in);
     switch (args.length) {
@@ -150,6 +151,16 @@ public class TagalongRobotBuilder {
           if (variant == MicrosystemVariants.Default) {
             System.out.println("invalid microsystem variant #");
           }
+          if (variant == MicrosystemVariants.PivotNoFused) {
+            System.out.println("What type of encoder are you using?");
+            try {
+              unfusedEncoderType = scan.next();
+              scan.nextLine();
+            } catch (Exception e) {
+              System.err.println(e);
+              break;
+            }
+          }
         }
         // Name of micro system
         System.out.println("What do you want to name your microsystem?");
@@ -239,6 +250,32 @@ public class TagalongRobotBuilder {
                 motorTypes,
                 motorDeviceIDs,
                 canBus
+            );
+            break;
+          case PivotNoEncoder:
+            conf = new TagalongPivotConf(
+                projPath,
+                microName,
+                subsystemName,
+                robotVersion,
+                variant,
+                motorTypes,
+                motorDeviceIDs,
+                canBus
+            );
+            break;
+          case PivotNoFused:
+            conf = new TagalongPivotConf(
+                projPath,
+                microName,
+                subsystemName,
+                robotVersion,
+                variant,
+                motorTypes,
+                motorDeviceIDs,
+                canBus,
+                encoderID,
+                unfusedEncoderType
             );
             break;
           default:

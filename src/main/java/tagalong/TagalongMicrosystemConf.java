@@ -22,6 +22,7 @@ public class TagalongMicrosystemConf {
   protected ArrayList<String> _motorTypes;
   protected ArrayList<String> _motorDeviceIDs;
   protected String _canBus;
+  protected String _encoderType;
   public TagalongMicrosystemConf(
       String dir,
       String microName,
@@ -30,7 +31,8 @@ public class TagalongMicrosystemConf {
       MicrosystemVariants variant,
       ArrayList<String> motorTypes,
       ArrayList<String> motorDeviceIDs,
-      String canBus
+      String canBus,
+      String encoderType
   ) {
     if (microName == null) {
       System.out.println("Invalid Microsystem Name.");
@@ -46,6 +48,30 @@ public class TagalongMicrosystemConf {
     _motorTypes = motorTypes;
     _motorDeviceIDs = motorDeviceIDs;
     _canBus = canBus;
+    _encoderType = encoderType;
+  }
+
+  public TagalongMicrosystemConf(
+      String dir,
+      String microName,
+      String subsystemName,
+      String robotVersion,
+      MicrosystemVariants variant,
+      ArrayList<String> motorTypes,
+      ArrayList<String> motorDeviceIDs,
+      String canBus
+  ) {
+    this(
+        dir,
+        microName,
+        subsystemName,
+        robotVersion,
+        variant,
+        motorTypes,
+        motorDeviceIDs,
+        canBus,
+        "Fused"
+    );
   }
 
   public void writeClass() {
@@ -56,7 +82,7 @@ public class TagalongMicrosystemConf {
     FileUtils.writeToFile(
         _file,
         getFileHeader() + getClassHeader() + getRequiredMotorConfigs() + getControlConstants()
-            + getRequiredTuning() + getMethods() + getConstructor() + "\n}"
+            + getRequiredTuning() + getMethods() + getConversions() + getConstructor() + "\n}"
     );
   }
 
@@ -115,6 +141,10 @@ public class TagalongMicrosystemConf {
 
   public String getMethods() {
     // clang-format off
+    return "";
+  }
+
+  public String getConversions() {
     return "";
   }
 
