@@ -89,7 +89,11 @@ import frc.robot.subsystems.confs.%sConf;
               microspec.getVariant().getCapitalName(),
               FileUtils.convertToCapital(_name)
           );
+    
+    if(microspec.getVariant() == MicrosystemVariants.PivotFused || microspec.getVariant() ==MicrosystemVariants.PivotUnfused || microspec.getVariant() ==MicrosystemVariants.PivotFused){
+      _str += String.format("import tagalong.subsystems.micro.%s;\n", FileUtils.convertToCapital(microspec.getVariant().getFullName()));
     }
+  }
 
     String baseString =
         // clang-format off
@@ -151,8 +155,9 @@ import tagalong.subsystems.TagalongSubsystemBase;
       int counter = 0;
       for (var micro : _microspecs) {
         if (micro.getVariant() == variant) {
-          _str +=
-              "\n  public static final int %s_ID = %d;\n".formatted(micro._capitalName, counter++);
+          _str += "\n  public static final int %s_ID = %d;\n".formatted(
+              micro._capitalName, counter++
+          );
         }
       }
     }
@@ -206,9 +211,9 @@ import tagalong.subsystems.TagalongSubsystemBase;
         + "checkInitStatus" + paren + "{\n  return";
 
     for (int i = 0; i < _microspecs.size(); i++) {
-      _str +=
-          "  _%s.checkInitStatus()".formatted(FileUtils.convertToCamel(_microspecs.get(i).getName())
-          );
+      _str += "  _%s.checkInitStatus()".formatted(
+          FileUtils.convertToCamel(_microspecs.get(i).getName())
+      );
       if (i < _microspecs.size() - 1) {
         _str += " && ";
       } else {
@@ -259,8 +264,9 @@ import tagalong.subsystems.TagalongSubsystemBase;
     int variantCounter = 1;
     for (var microspec : _microspecs) {
       if (microspec.getVariant() == spec.getVariant() && microspec._camelName != spec._camelName) {
-        _str +=
-            "      case %d:\n        return _%s;".formatted(variantCounter++, microspec._camelName);
+        _str += "      case %d:\n        return _%s;".formatted(
+            variantCounter++, microspec._camelName
+        );
       }
     }
 
@@ -283,7 +289,7 @@ public void writeConstructor() {
   for (TagalongMicrosystemSpec microSpec : _microspecs) {
     _str += "    _" + FileUtils.convertToCamel(microSpec.getName());
     _str += " = new %s( %sConf!= null ? %sConf.%sConf : null);\n".formatted(
-        FileUtils.convertToCapital(microSpec.getVariant().name()),
+        FileUtils.convertToCapital(microSpec.getVariant().getFullName()),
         FileUtils.convertToCamel(_name),
         FileUtils.convertToCamel(_name),
         microSpec._camelName

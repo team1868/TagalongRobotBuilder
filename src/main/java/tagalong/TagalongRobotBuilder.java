@@ -159,7 +159,8 @@ public class TagalongRobotBuilder {
         canBus = scan.nextLine();
 
         int encoderID = 0;
-        if (variant == MicrosystemVariants.Pivot) {
+        if (variant == MicrosystemVariants.PivotFused || variant == MicrosystemVariants.PivotUnfused
+            || variant == MicrosystemVariants.PivotNoCancoder) {
           System.out.println("What is the encoder id?");
           encoderID = Integer.valueOf(scan.nextLine());
         }
@@ -216,7 +217,9 @@ public class TagalongRobotBuilder {
                 canBus
             );
             break;
-          case Pivot:
+          case PivotFused:
+          case PivotUnfused:
+          case PivotNoCancoder:
             conf = new TagalongPivotConf(
                 projPath,
                 microName,
@@ -294,14 +297,17 @@ public class TagalongRobotBuilder {
             "bash",
             "-c",
             "find " + projPath + "/src"
-                + " -iname '*.java'| xargs clang-format -i -style=./.clang-format"});
+                + " -iname '*.java'| xargs clang-format -i -style=./.clang-format"
+        });
         p.waitFor(15, TimeUnit.SECONDS);
       } else if (osName.contains("win")) {
         Process p = Runtime.getRuntime().exec(new String[] {
             "cmd.exe",
             "/c",
             "FOR /R \"" + projPath
-                + "\\src\" %I IN (*.java) DO clang-format \"%I\" -i -style=file:.\\.clang-format"});
+                + ("\\src\" %I IN (*.java) DO clang-format \"%I\" -i "
+                   + "-style=file:.\\.clang-format")
+        });
         p.waitFor(15, TimeUnit.SECONDS);
         System.out.println("it ran");
       }

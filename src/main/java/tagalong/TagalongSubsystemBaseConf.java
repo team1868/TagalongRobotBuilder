@@ -59,13 +59,15 @@ public class TagalongSubsystemBaseConf {
     classString += "public class %sConf {\n".formatted(_subsystemSpec._capitalName);
     for (var microspec : _microspecs) {
       classString += "    public %sConf %sConf;\n".formatted(
-          microspec.getVariant().name(), microspec._camelName
+          microspec.getVariant().getCapitalName(), microspec._camelName
       );
     }
 
     classString += "public %sConf(".formatted(_subsystemSpec._capitalName);
     for (var microspec : _microspecs) {
-      classString += "%sConf %sConf".formatted(microspec.getVariant().name(), microspec._camelName);
+      classString += "%sConf %sConf".formatted(
+          microspec.getVariant().getCapitalName(), microspec._camelName
+      );
       if (microspec != _microspecs.get(_microspecs.size() - 1)) {
         classString += ", ";
       }

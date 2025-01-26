@@ -51,7 +51,7 @@ public class TagalongSubsystemConf {
     String header = "package frc.robot.subsystems.confs;\n";
     for (var microspec : _microspecs) {
       header += "\nimport tagalong.subsystems.micro.confs.%sConf;\n".formatted(
-          microspec.getVariant().name()
+          microspec.getVariant().getCapitalName()
       );
       header += "import frc.robot.subsystems.confs.micro."
           + FileUtils.convertToCapital(_robotVersion)
@@ -101,7 +101,9 @@ public class TagalongSubsystemConf {
     classString += "    public " + FileUtils.convertToCapital(_robotVersion)
         + "%sConf(".formatted(_subsystemSpec._capitalName);
     for (var microspec : _microspecs) {
-      classString += "%sConf %sConf".formatted(microspec.getVariant().name(), microspec._camelName);
+      classString += "%sConf %sConf".formatted(
+          microspec.getVariant().getCapitalName(), microspec._camelName
+      );
       if (microspec != _microspecs.get(_microspecs.size() - 1)) {
         classString += ", ";
       }

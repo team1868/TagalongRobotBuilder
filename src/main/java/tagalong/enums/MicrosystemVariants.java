@@ -9,33 +9,39 @@ package tagalong.enums;
 import tagalong.utils.FileUtils;
 
 public enum MicrosystemVariants {
-  Default(),
+  Default(""),
   // Flywheel(),
-  Elevator(),
-  Pivot(),
-  Roller();
-  // PivotFused(),
-  // PivotNoFused(),
-  // PivotNoEncoder(),
+  Elevator("Elevator"),
+  Roller("Roller"),
+  PivotFused("Pivot"),
+  PivotUnfused("Pivot"),
+  PivotNoCancoder("Pivot");
   // Turret(),
   // ElevatorTelescoping(),
   // TensionTelescoping();
 
+  private String _name;
   private String _camelName;
   private String _capitalName;
 
-  MicrosystemVariants() {}
+  MicrosystemVariants(String name) {
+    _name = name;
+  }
+
+  public String getFullName() {
+    return this.name();
+  }
 
   public String getCamelName() {
     if (_camelName == null) {
-      _camelName = FileUtils.convertToCamel(this.name());
+      _camelName = FileUtils.convertToCamel(_name);
     }
     return _camelName;
   }
 
   public String getCapitalName() {
     if (_capitalName == null) {
-      _capitalName = FileUtils.convertToCapital(this.name());
+      _capitalName = FileUtils.convertToCapital(_name);
     }
     return _capitalName;
   }
