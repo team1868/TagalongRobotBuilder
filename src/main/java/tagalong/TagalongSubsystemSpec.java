@@ -90,7 +90,7 @@ import frc.robot.subsystems.confs.%sConf;
               FileUtils.convertToCapital(_name)
           );
     
-    if(microspec.getVariant() == MicrosystemVariants.PivotFused || microspec.getVariant() ==MicrosystemVariants.PivotUnfused || microspec.getVariant() ==MicrosystemVariants.PivotFused){
+    if(microspec.getVariant() == MicrosystemVariants.PivotFused || microspec.getVariant() == MicrosystemVariants.PivotUnfused || microspec.getVariant() == MicrosystemVariants.PivotNoCancoder){
       _str += String.format("import tagalong.subsystems.micro.%s;\n", FileUtils.convertToCapital(microspec.getVariant().getFullName()));
     }
   }
