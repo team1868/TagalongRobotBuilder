@@ -9,7 +9,10 @@ package tagalong.enums;
 public enum MicrosystemTypes {
   Default(),
   Rotational(new MicrosystemVariants[] {
-      MicrosystemVariants.Roller, MicrosystemVariants.Pivot,
+      MicrosystemVariants.Roller,
+      MicrosystemVariants.PivotFused,
+      MicrosystemVariants.PivotUnfused,
+      MicrosystemVariants.PivotNoCancoder
       // MicrosystemVariants.Flywheel,
       // MicrosystemVariants.PivotFused,
       // MicrosystemVariants.PivotNoEncoder,
