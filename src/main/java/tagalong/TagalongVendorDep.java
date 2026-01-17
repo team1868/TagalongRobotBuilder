@@ -12,7 +12,7 @@ import tagalong.utils.FileUtils;
 
 public class TagalongVendorDep {
   public static void addVendorDep(String dir) {
-    String tagalongLibVersion = "2025.21.0204";
+    String tagalongLibVersion = "2026.1";
     String vendorDep =
         // clang-format off
 """
