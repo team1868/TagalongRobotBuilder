@@ -20,7 +20,7 @@ public class TagalongVendorDep {
   "fileName": "TagalongLib.json",
   "name": "TagalongLib",
   "version": "%s",
-  "frcYear": "2025",
+  "frcYear": "2026",
   "uuid": "32b609c1-86c7-4c61-a0f7-7debd9d77017",
   "mavenUrls": ["https://maven.pkg.github.com/Team1868/TagalongLib"],
   "jsonUrl": "https://github.com/team1868/TagalongLib/releases/latest/download/TagalongLib.json",

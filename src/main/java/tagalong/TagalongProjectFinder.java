@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.Scanner;
 
 public class TagalongProjectFinder {
-  public static final String WPILIB_YEAR = "2025";
+  public static final String WPILIB_YEAR = "2026";
   public static final String WPILIB_FORMATTED_YEAR = "\"" + WPILIB_YEAR + "\",";
   // {
   // "enableCppIntellisense": false,
